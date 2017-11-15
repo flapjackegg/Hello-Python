@@ -12,6 +12,7 @@
 """
 import sys
 
+
 def calculator(salary):
     tax_point = 3500
     social_sec = 0
@@ -21,7 +22,7 @@ def calculator(salary):
 
     taxable = salary - social_sec - tax_point
 
-    #print(taxable)
+    # print(taxable)
     if taxable > 0 and taxable <= 1500:
         tax = taxable * 0.03 - 0
         print(tax)
@@ -50,11 +51,10 @@ def calculator(salary):
         tax = taxable * 0.45 - 13505
         print(tax)
 
-if __name__ =='__main__':
+
+if __name__ == '__main__':
     salary = sys.argv[1].strip()
     if salary.isdigit():
         calculator(int(salary))
     else:
         print("Parameter Error")
-
-
