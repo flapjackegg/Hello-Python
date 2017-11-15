@@ -18,38 +18,37 @@ def calculator(salary):
     social_sec = 0
     tax = 0
     if salary <= tax_point:
-        print(tax)
+        print(format(tax, ".2f"))
 
     taxable = salary - social_sec - tax_point
 
     # print(taxable)
     if taxable > 0 and taxable <= 1500:
         tax = taxable * 0.03 - 0
-        print(tax)
+        print(format(tax, ".2f"))
 
     if taxable > 1500 and taxable <= 4500:
         tax = taxable * 0.1 - 105
-        print(tax)
+        print(format(tax, ".2f"))
 
     if taxable > 4500 and taxable <= 9000:
         tax = taxable * 0.2 - 555
-        print(tax)
+        print(format(tax, ".2f"))
 
     if taxable > 9000 and taxable <= 35000:
         tax = taxable * 0.25 - 1005
-        print(tax)
+        print(format(tax, ".2f"))
 
     if taxable > 35000 and taxable <= 55000:
         tax = taxable * 0.3 - 2755
-        print(tax)
-
+        print(format(tax, ".2f"))
     if taxable > 55000 and taxable <= 80000:
         tax = taxable * 0.35 - 5505
-        print(tax)
+        print(format(tax, ".2f"))
 
     if taxable > 80000:
         tax = taxable * 0.45 - 13505
-        print(tax)
+        print(format(tax, ".2f"))
 
 
 if __name__ == '__main__':
