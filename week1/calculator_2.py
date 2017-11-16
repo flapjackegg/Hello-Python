@@ -9,6 +9,12 @@
 @software: PyCharm Community Edition
 @file: calculator_2.py
 @time: 2017/11/15 下午9:28
+
+tax: 税后工资
+tax_point: 起征税点
+social_sec: 五险一金
+taxable_in: 应纳税所得额
+taxable_am: 应纳税额
 """
 
 import sys
@@ -27,15 +33,15 @@ tax_table = [
 def calculator(job_nu, salary):
     tax_point = 3500
     social_sec = salary * 0.165
-    tax = 0
-    taxable = salary - social_sec - tax_point
-    if salary - social_sec <= tax_point:
+    tax = salary - social_sec
+    taxable_in = tax - tax_point
+    if tax <= tax_point:
         return '{}:{:.2f}'.format(job_nu, tax)
 
     for i in tax_table:
-        if taxable > i[0]:
-            taxable = taxable * i[1] - i[2]
-            tax = salary - social_sec - taxable
+        if taxable_in > i[0]:
+            taxable_am = taxable_in * i[1] - i[2]
+            tax = tax - taxable_am
             return '{}:{:.2f}'.format(job_nu, tax)
 
 
