@@ -166,8 +166,9 @@ if __name__ == '__main__':
             p_build_user_data.join()
             p_dump_to_file.start()
             p_dump_to_file.join()
-        else:
-            print('Path Error: No such file or directory')
+        # else:
+        #     print("Parameter Error")
+        #     print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
     except NameError:
         print("Parameter Error")
         print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
