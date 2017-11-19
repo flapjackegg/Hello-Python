@@ -149,20 +149,26 @@ if __name__ == '__main__':
         # print(city, user_file_path, cfg_file_path, gongzi_file_path)
     except (getopt.GetoptError, NameError):
         print("Parameter Error")
+        print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
         exit(1)
 
-    if os.path.exists(cfg_file_path) and os.path.exists(user_file_path):
-        queue = Queue()
-        config = Config(cfg_file_path, city)
-        user = UserData(user_file_path, gongzi_file_path)
-        p_read_user_info = Process(target=user.read_user_data)
-        p_build_user_data = Process(target=user.calculator)
-        p_dump_to_file = Process(target=user.dump_to_file)
-        p_read_user_info.start()
-        p_read_user_info.join()
-        p_build_user_data.start()
-        p_build_user_data.join()
-        p_dump_to_file.start()
-        p_dump_to_file.join()
-    else:
-        print('Path Error: No such file or directory')
+    try:
+        if os.path.exists(cfg_file_path) and os.path.exists(user_file_path):
+            queue = Queue()
+            config = Config(cfg_file_path, city)
+            user = UserData(user_file_path, gongzi_file_path)
+            p_read_user_info = Process(target=user.read_user_data)
+            p_build_user_data = Process(target=user.calculator)
+            p_dump_to_file = Process(target=user.dump_to_file)
+            p_read_user_info.start()
+            p_read_user_info.join()
+            p_build_user_data.start()
+            p_build_user_data.join()
+            p_dump_to_file.start()
+            p_dump_to_file.join()
+        else:
+            print('Path Error: No such file or directory')
+    except NameError:
+        print("Parameter Error")
+        print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
+        exit(1)
