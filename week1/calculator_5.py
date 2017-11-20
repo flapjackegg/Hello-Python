@@ -105,6 +105,7 @@ class UserData(object):
             taxable_in = tax - TAX_POINT
             now = datetime.now()
             now_str = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
+            # print(social_cardinal, JiShuL, JiShuH)
 
             if tax <= TAX_POINT:
                 user_data_list.append('{},{:.2f},{:.2f},0.00,{:.2f},{}\n'.format(job_nu, salary, social_sec, tax, now_str))
@@ -138,8 +139,6 @@ if __name__ == '__main__':
                 exit(0)
             if name in ('-C', '--city'):
                 city = opt.upper()
-            else:
-                city = 'DEFAULT'
             if name in ('-c', '--config'):
                 cfg_file_path = opt
             if name in ('-d', '--data'):
@@ -154,9 +153,11 @@ if __name__ == '__main__':
 
     try:
         if os.path.exists(cfg_file_path) and os.path.exists(user_file_path):
-            queue = Queue()
+            if not 'city' in dir():
+                city = 'DEFAULT'
             config = Config(cfg_file_path, city)
             user = UserData(user_file_path, gongzi_file_path)
+            queue = Queue()
             p_read_user_info = Process(target=user.read_user_data)
             p_build_user_data = Process(target=user.calculator)
             p_dump_to_file = Process(target=user.dump_to_file)
@@ -166,9 +167,6 @@ if __name__ == '__main__':
             p_build_user_data.join()
             p_dump_to_file.start()
             p_dump_to_file.join()
-        # else:
-        #     print("Parameter Error")
-        #     print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
     except NameError:
         print("Parameter Error")
         print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
