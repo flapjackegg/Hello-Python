@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="">
+	<title></title>
+</head>
+<body>
+    {% for key, value in info.items() %}
+    <h1>{{key}}: {{value | filter}}</h1>
+    {% endfor %}
+</body>
+</html>
