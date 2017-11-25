@@ -50,6 +50,18 @@ class Category(db.Model):
     def __repr__(self):
         return '<Category %r)>' % self.name
 
+def create_database():
+    db.create_all()
+    java = Category('Java')
+    python = Category('python')
+    file1 = File('Hello Java', java, 'File Content - Java is cool!')
+    file2 = File('Hello Python', python, 'File Content - Python is cool!')
+    db.session.add(java)
+    db.session.add(python)
+    db.session.add(file1)
+    db.session.add(file2)
+    db.session.commit()
+
 
 @app.route('/')
 def index():
