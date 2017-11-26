@@ -11,13 +11,16 @@
 """
 
 from datetime import datetime
+from pymongo import MongoClient
 from flask import Flask, render_template, abort
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:hammer@localhost/shiyanlou'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/shiyanlou'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 db = SQLAlchemy(app)
+client = MongoClient('127.0.0.1', 27017)
+mongo = client.shiyanlou
 
 
 class File(db.Model):
@@ -38,6 +41,34 @@ class File(db.Model):
 
     def __repr__(self):
         return "<File(title %r)>" % self.title
+
+    def add_tag(self, tag_name):
+        tag_item = mongo.tags.find_one({'file_id': self.id})
+        if tag_item:
+            this_tags = tag_item['tags']
+            if tag_name not in this_tags:
+                this_tags.append(tag_name)
+            else:
+                return 'Already has this tag'
+            mongo.tags.update_one({'file_id': self.id}, {'$set': {'tags': this_tags}})
+        else:
+            this_tags = [tag_name]
+            mongo.tags.insert_one({'file_id': self.id, 'tags': this_tags})
+
+    def remove_tag(self, tag_name):
+        tag_item = mongo.tags.find_one({'file_id': self.id})
+        if tag_item:
+            this_tags = tag_item['tags']
+            new_tags = this_tags.remove(tag_name)
+            mongo.tags.update_one({'file_id': self.id}, {'$set', {'tags': new_tags}})
+        else:
+            return "Don't have this tag"
+
+    @property
+    def tags(self):
+        tag_item = mongo.tags.find_one({'file_id': self.id})
+        if tag_item:
+            return tag_item['tags']
 
 class Category(db.Model):
     # __tablename__ = 'category'
@@ -61,6 +92,13 @@ def create_database():
     db.session.add(file1)
     db.session.add(file2)
     db.session.commit()
+
+def inert_mongo():
+    file1.add_tag('tech')
+    file1.add_tag('java')
+    file1.add_tag('linux')
+    file2.add_tag('tech')
+    file2.add_tag('python')
 
 
 @app.route('/')
