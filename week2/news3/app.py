@@ -93,12 +93,6 @@ def create_database():
     db.session.add(file2)
     db.session.commit()
 
-def inert_mongo():
-    file1.add_tag('tech')
-    file1.add_tag('java')
-    file1.add_tag('linux')
-    file2.add_tag('tech')
-    file2.add_tag('python')
 
 
 @app.route('/')

@@ -8,6 +8,9 @@
 <body>
     {% for i in post_info %}
     <h1>Title: <a href="{{url_for('file', file_id=i.id)}}">{{i.title}}</a></h1>
+    {% for tag in i.tags %}
+    <a>{{tag}}</a>
+    {% endfor %}
     {% endfor %}
 </body>
 </html>
