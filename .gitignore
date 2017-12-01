@@ -1,7 +1,10 @@
 .idea/*
 __pycache__/
+.vagrant/*
 */__pycache__/
 week1/gongzi.csv
 gongzi.csv
 .vscode/*
 Vagrantfile
+*.log
+*.pyc
