@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
 import pandas as pd
 
 
@@ -10,11 +11,22 @@ def analysis(file, user_id):
     except ValueError:
         return 0
     try:
-        user_id = int(user_id)
         user_data = data_json[data_json['user_id'] == user_id]['minutes']
-    except (KeyError, TypeError):
+    except KeyError:
         return 0
     return user_data.count(), user_data.sum()
 
 
-print(analysis('user_study.json', '1'))
+def main():
+    if len(sys.argv) != 3:
+        exit(-1)
+    try:
+        file = sys.argv[1]
+        user_id = int(sys.argv[2])
+    except (ValueError, TypeError):
+        return 0
+    print(analysis(file, user_id))
+
+
+if __name__ == '__main__':
+    main()
