@@ -9,7 +9,7 @@ def analysis(file, user_id):
     try:
         data_json = pd.read_json(file)
     except ValueError:
-        return 0
+        return 0,0
     try:
         user_data = data_json[data_json['user_id'] == user_id]['minutes']
     except KeyError:
