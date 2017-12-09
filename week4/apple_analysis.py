@@ -11,7 +11,7 @@ def quarter_volume():
         return 0, 0
     newdata = data.Volume
     newdata.index = pd.to_datetime(data.Date)
-    season_volume = newdata.resample('3m').sum().shift(2, freq='m')
+    season_volume = newdata.resample('Q').sum()
     second_volume = season_volume.sort_values()[-2]
     return second_volume
 
