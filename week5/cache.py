@@ -9,7 +9,7 @@ class RedisCache(object):
 
     def cache(self, timeout=0):
         def deco(func):
-            @wraps
+            @wraps(func)
             def wrapper(*args, **kwargs):
                 if timeout == 0:
                     return func(*args, **kwargs)
@@ -18,7 +18,8 @@ class RedisCache(object):
                 if not value:
                     value = func(*args, **kwargs)
                     self._redis.setex(key, timeout, json.dumps(value))
+                    return value
                 else:
-                    return json.dumps(value)
+                    return json.loads(value.decode())
             return wrapper
         return deco
