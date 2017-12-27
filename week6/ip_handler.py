@@ -28,17 +28,17 @@ class IpLocationHandler(CommandHandler):
         if not self.check_match(message):
             return
 
-        ip = message.strip()
+        ip = message.content.strip()
         pattern = r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$'
 
         if not re.match(pattern, ip):
-            msg = 'IP地址无效'
+            self.msg = 'IP地址无效'
         
         res = self.qqwry.lookup(ip)
 
         if res is None:
-            msg = '未找到'
+            self.msg = '未找到'
         else:
-            msg = res[0]
-        return create_reply(msg, message)
+            self.msg = res[0]
+        return create_reply(self.msg, message)
 
