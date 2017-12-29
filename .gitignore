@@ -10,4 +10,6 @@ Vagrantfile
 *.pyc
 */venv
 ngrok
+labs
+labs/*
 qqwry.dat
