@@ -8,3 +8,6 @@ gongzi.csv
 Vagrantfile
 *.log
 *.pyc
+*/venv
+ngrok
+qqwry.dat
