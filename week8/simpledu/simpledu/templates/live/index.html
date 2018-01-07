@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block title %}Live{% endblock %}
+
+
+{% block body %}
+<div class="row">
+  <div class="col-md-9">
+    <h2>直播：{{ live.author.username }}</h2>
+    <p>主播：{{ live.name }}</p>
+    <video id="videoElement" width="100%" height="500px" controls="controls"></video>
+  </div>
+  <div class="col-md-3">
+  </div>
+</div>
+{% endblock %}
+
+{% block tail_js %}
+{{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flv.js/1.3.3/flv.min.js"></script>
+<script>
+if (flvjs.isSupported()) {
+    var videoElement = document.getElementById('videoElement');
+    var flvPlayer = flvjs.createPlayer({
+        type: 'flv',
+        isLive: true,
+        url: '{{ live.live_url }}'
+    });
+    flvPlayer.attachMediaElement(videoElement);
+    flvPlayer.load();
+    flvPlayer.play();
+}
+</script>
+{% endblock %}
+
